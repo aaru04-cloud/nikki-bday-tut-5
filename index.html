@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, My Love</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Comic Neue', cursive;
+      overflow: hidden;
+      background: linear-gradient(120deg, #ffdee9, #b5fffc);
+    }
+    .slide {
+      display: none;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      text-align: center;
+      color: #fff;
+      padding: 50px 20px;
+    }
+    .slide.active {
+      display: block;
+    }
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://via.placeholder.com/1200x800') center/cover no-repeat;
+      opacity: 0.6;
+      filter: blur(4px);
+      z-index: 0;
+    }
+    .hearts, .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hearts::after {
+      content: '❤️ 💖 💕 💓 💗';
+      font-size: 2.5em;
+      position: absolute;
+      animation: float 5s infinite linear;
+    }
+    .sparkles::after {
+      content: '✨ ✨ ✨ ✨ ✨';
+      font-size: 1.5em;
+      position: absolute;
+      animation: sparkle 7s infinite linear;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    @keyframes sparkle {
+      0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+    .content h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: typing 3s steps(30, end) infinite alternate;
+    }
+    @keyframes typing {
+      from { width: 0; overflow: hidden; white-space: nowrap; }
+      to { width: 100%; }
+    }
+    button {
+      background: pink;
+      color: #333;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .gift-popup {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: #333;
+      padding: 20px;
+      border-radius: 15px;
+      z-index: 999;
+      text-align: center;
+    }
+    .gift-popup img {
+      max-width: 200px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mp3">
+</audio>
+
+<div class="gift-popup" id="giftPopup">
+  <h2>Your Gift 🎁</h2>
+  <img src="https://via.placeholder.com/200" alt="Gift Photo">
+  <br><br>
+  <button onclick="closeGift()">Close</button>
+</div>
+
+<div class="slide active">
+  <div class="background"></div>
+  <div class="hearts"></div>
+  <div class="sparkles"></div>
+  <div class="content">
+    <h1>Happy Birthday, My Love! 🎉</h1>
+    <button onclick="showGift()">🎁 Click here for the gift</button>
+    <br><br>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 0;
+const slideTexts = [
+  "Our 1st month together! So special 💖",
+  "Month 2: Growing closer every day 💕",
+  "Month 3: So many memories made 🌸",
+  "Month 4: Our fights, but still together ❤️‍🩹",
+  "Month 5: We healed and grew stronger 💪",
+  "Month 6: I love you, for the first time 💘",
+  "Month 7: Your Birthday 🎂",
+  "❤️ Thank you! ❤️"
+];
+
+slideTexts.forEach(text => {
+  const div = document.createElement('div');
+  div.className = 'slide';
+  div.innerHTML = `
+    <div class="background"></div>
+    <div class="hearts"></div>
+    <div class="sparkles"></div>
+    <div class="content">
+      <h1>${text}</h1>
+      <button onclick="nextSlide()">Next</button>
+    </div>
+  `;
+  document.body.appendChild(div);
+});
+
+const slides = document.querySelectorAll('.slide');
+
+function nextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide++;
+  if (currentSlide >= slides.length) currentSlide = 0;
+  slides[currentSlide].classList.add('active');
+}
+
+function showGift() {
+  document.getElementById('giftPopup').style.display = 'block';
+}
+
+function closeGift() {
+  document.getElementById('giftPopup').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
